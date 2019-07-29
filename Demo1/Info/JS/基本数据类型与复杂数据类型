@@ -2,7 +2,7 @@
 Undefined, null, number, string, boolean
 
 复杂数据类型：
-Object(其中对象类型又有Array, Function, RegExp, Date)
+Object(其中对象类型又有Object, Array, Function, RegExp, Date)
 
 
 检测变量的数据类型：
@@ -13,8 +13,10 @@ typeof
 
 
 instanceof
-1 arr = [];  arr instanceof Array;            // true
-2 num = null; num instanceof Object;          // false
-3 fu function() {}; fu instanceof Function;   // true;
-4 fu function() {}; fu instanceof Object;     // true;
+测试一个对象在其原型链中是否存在一个构造函数的 prototype 属性
+
+1 对于undefined和null，instanceOf运算符总是返回false
+2 instanceOf无法检测基本数据类型
+3 a._proto_  === b.prototype         >>   a instanceof b   >> true
+4 a._proto_._proto_ === b.prototype  >>   a instanceof b   >> true
 
