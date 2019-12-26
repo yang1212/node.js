@@ -1,0 +1,20 @@
+.dataPanel {
+  border: 1px solid #eee;
+  min-height: 250px;
+  margin-top: 10px;
+  padding: 0 10px 10px 10px;
+  border-radius: 4px;
+}
+.listBlock {
+  margin-top: 10px;
+}
+.listSpan {
+  font-size: 12px;
+  font-weight: bold;
+  display: block;
+}
+.titleInput{
+  width: 60%;
+  display: block;
+  margin:10px 0;
+}
