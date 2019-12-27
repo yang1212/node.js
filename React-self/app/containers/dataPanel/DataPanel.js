@@ -13,7 +13,7 @@ const Option = Select.Option;
 
 class DataPanel extends Component {
   constructor(props) {
-    super(props);
+    super(props); // 有点迷糊不知道干嘛用的
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.state = {
       tagList: ['吃的', '用的', '玩的']

@@ -28,7 +28,7 @@ class DataPanelDetail extends Component {
       id: value
     }
     let res = await delListData(tempId)
-    if (res.n === 1) {
+    if (res.code === 0) {
       const { list } = this.state;
       list.forEach((item, index) => {
         if (item._id === value) {
@@ -38,7 +38,6 @@ class DataPanelDetail extends Component {
           })
         }
       })
-      console.log(list)
     }
   }
 
