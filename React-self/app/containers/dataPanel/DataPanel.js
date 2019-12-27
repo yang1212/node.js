@@ -1,14 +1,9 @@
 import React, {Component, PropTypes} from 'react'
 // 在react开发中都尽量在组件中加入PureRenderMixin方法去优化性能
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-// React-Redux 提供connect方法，用于从 UI 组件生成容器组件。connect的意思，就是将这两种组件连起来
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 import {Input, Select, Button, Modal} from 'antd';
 import style from './style.css'
 import { getFlightDetail } from './service'
-import {actions} from "../../reducers/adminCalclulate";
-const { update_name, update_price, update_tag, save_priceData} = actions;
 const Option = Select.Option;
 
 class DataPanel extends Component {
@@ -16,34 +11,37 @@ class DataPanel extends Component {
     super(props); // 有点迷糊不知道干嘛用的
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.state = {
-      tagList: ['吃的', '用的', '玩的']
+      tagList: ['吃的', '用的', '玩的'],
+      tag: '',
+      name: '',
+      price: 0
     }
   }
   //标题输入框
   titleOnChange(e) {
-    this.props.update_name(e.target.value)
+    this.setState({name: e.target.value,})  
   };
   // 价格输入框
   priceOnChange(e) {
-    this.props.update_price(e.target.value)
+    this.setState({price: e.target.value,})  
   };
   //选择标签
-  selectTags(value) {
-    this.props.update_tag(value)
+  selectTags(e) {
+    this.setState({tag: e,})  
   };
   //发表
   async publishArticle() {
     let priceData = {};
-    priceData.name = this.props.name;
-    priceData.price = this.props.price;
-    priceData.tag = this.props.tag;
+    priceData.name = this.state.name;
+    priceData.price = this.state.price;
+    priceData.tag = this.state.tag;
     let tempDate = new Date();
     priceData.date = tempDate.getFullYear() + '年' + (tempDate.getMonth() + 1) + '月' + tempDate.getDate() + '日'
     let res = await getFlightDetail(priceData)
   };
 
   render() {
-    const { tagList } = this.state;
+    const { tagList, tag, name, price } = this.state;
     return (
       <div>
         <h2>数据统计</h2>
@@ -53,8 +51,8 @@ class DataPanel extends Component {
             <Select
               className={style.titleInput}
               placeholder={'请选择'}
-              onChange={this.selectTags.bind(this)}
-              value={this.props.tag}
+              value={tag}
+              onChange={this.selectTags.bind(this)} // 为何要用bind，目的？
             >
               {
                 tagList.map((item) => (
@@ -69,7 +67,7 @@ class DataPanel extends Component {
               className={style.titleInput}
               placeholder={'请输入物品名称'}
               type='text'
-              value={this.props.name}
+              value={name}
               onChange={this.titleOnChange.bind(this)}/>
           </div>
           <div className={style.listBlock}>
@@ -78,7 +76,7 @@ class DataPanel extends Component {
               className={style.titleInput}
               placeholder={'请输入价格'}
               type='text'
-              value={this.props.price}
+              value={price}
               onChange={this.priceOnChange.bind(this)}/>
           </div>
         </div>
@@ -93,38 +91,4 @@ class DataPanel extends Component {
   }
 }
 
-DataPanel.propsTypes = {
-  name: PropTypes.string,
-  price: PropTypes.number,
-  tag: PropTypes.string,
-}
-
-DataPanel.defaultProps = {
-  name: '',
-  price: 0,
-  tag: '',
-}
-
-function mapStateToProps(state) {  // 视图数据改变,将触发
-  const {name, price, tag} = state.shopData;
-  return {
-    name,
-    price,
-    tag,
-  }
-}
-
-function mapDispatchToProps(dispatch) { // 用来建立 UI 组件的参数到store.dispatch方法的映射。也就是说，它定义了哪些用户的操作应该当作 Action，传给 Store
-  return {
-    update_name: bindActionCreators(update_name, dispatch),
-    update_price: bindActionCreators(update_price, dispatch),
-    update_tag: bindActionCreators(update_tag, dispatch),
-    save_priceData: bindActionCreators(save_priceData, dispatch)
-  }
-}
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DataPanel)
-
-// 上面代码中，DataPanel是 UI 组件，由 React-Redux 通过connect方法自动生成的容器组件
+export default DataPanel
