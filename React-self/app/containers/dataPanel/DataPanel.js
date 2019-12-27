@@ -105,8 +105,8 @@ DataPanel.defaultProps = {
   tag: '',
 }
 
-function mapStateToProps(state) { // 会订阅 Store，每当state更新的时候，就会自动执行，重新计算 UI 组件的参数，从而触发 UI 组件的重新渲染
-  const {name, price, tag} = state.admin.shopData;
+function mapStateToProps(state) {  // 视图数据改变,将触发
+  const {name, price, tag} = state.shopData;
   return {
     name,
     price,
