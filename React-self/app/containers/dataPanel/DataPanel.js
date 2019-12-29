@@ -4,6 +4,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import {Input, Select, Button, Modal} from 'antd';
 import style from './style.css'
 import { getFlightDetail } from './service'
+import { Loading } from '../components/loading/Loading';
 const Option = Select.Option;
 
 class DataPanel extends Component {
@@ -47,7 +48,8 @@ class DataPanel extends Component {
       ],
       tag: '',
       name: '',
-      price: 0
+      price: 0,
+      showLoading: false
     }
   }
   //标题输入框
@@ -65,6 +67,7 @@ class DataPanel extends Component {
   };
   //发表
   async publishArticle() {
+    this.setState({showLoading: true})
     let priceData = {};
     priceData.name = this.state.name;
     priceData.price = this.state.price;
@@ -72,12 +75,15 @@ class DataPanel extends Component {
     let tempDate = new Date();
     priceData.date = tempDate.getFullYear() + '年' + (tempDate.getMonth() + 1) + '月' + tempDate.getDate() + '日'
     let res = await getFlightDetail(priceData)
+    if (res.code === 0) {
+      this.setState({showLoading: false})
+    }
   };
 
   render() {
-    const { tagList, tag, name, price } = this.state;
+    const { tagList, tag, name, price, showLoading } = this.state;
     return (
-      <div>
+      <div className={style.dataRecordBox}>
         <h2>数据统计</h2>
         <div className={style.dataPanel}>
           <div className={style.listBlock}>
@@ -120,6 +126,9 @@ class DataPanel extends Component {
             className={style.buttonStyle}>发布
           </Button>
         </div>
+        {
+          showLoading ? <Loading></Loading> : ''
+        }
       </div>
     )
   }
