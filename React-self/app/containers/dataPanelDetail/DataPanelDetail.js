@@ -51,7 +51,7 @@ class DataPanelDetail extends Component {
             list.map((item, index) => {
               return (
                 <div key={index}  className={style.listRow}> 
-                  {item.tag} {item.name}：{item.price}元, {item.date}
+                  {item.name}：{item.price}元, {item.date}
                   <span className={style.deleteBtn} onClick={this.deleteList.bind(this, (item._id))}>Delete</span>
                 </div>
               )

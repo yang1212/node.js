@@ -1,19 +1,14 @@
 .carouselImgContainer{
     width: 100%;
+    height: 50px;
     position: relative;
-}
-.carouselImgContainer img{
-    width: 100%;
-    height: 200px;
-
+    background: #fff;
 }
 
-.carouselImgContainer p{
-    position: absolute;
-    top: 20px;
-    color: #fff;
-    right: 20px;
-    cursor: pointer;
+.carouselImgContainer h3{
+    line-height: 50px;
+    font-size: 15px;
+    margin-left: 10px;
 }
 .homeBtn {
     position: absolute;

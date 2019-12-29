@@ -11,7 +11,40 @@ class DataPanel extends Component {
     super(props); // 有点迷糊不知道干嘛用的
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.state = {
-      tagList: ['吃的', '用的', '玩的'],
+      tagList: [
+        {
+          type: 'eat',
+          value:'餐饮'
+        }, 
+        { 
+          type: 'RendHouse',
+          value:'住房缴费'
+        },  
+        {
+          type: 'clothes',
+          value:'服饰美容'
+        },
+        {
+          type: 'travel',
+          value:'旅游'
+        },
+        {
+          type: 'traffic',
+          value:'交通'
+        },
+        {
+          type: 'amusement',
+          value:'娱乐'
+        },
+        {
+          type: 'study',
+          value:'学习'
+        },
+        {
+          type: 'medical',
+          value:'医疗'
+        }
+      ],
       tag: '',
       name: '',
       price: 0
@@ -23,7 +56,8 @@ class DataPanel extends Component {
   };
   // 价格输入框
   priceOnChange(e) {
-    this.setState({price: e.target.value,})  
+    this.setState({
+      price: e.target.value,})  
   };
   //选择标签
   selectTags(e) {
@@ -56,7 +90,7 @@ class DataPanel extends Component {
             >
               {
                 tagList.map((item) => (
-                  <Option key={item}>{item}</Option>
+                  <Option key={item.type}>{item.value}</Option>
                 ))
               }
             </Select>

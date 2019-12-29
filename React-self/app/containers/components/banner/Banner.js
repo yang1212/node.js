@@ -15,10 +15,8 @@ class Banner extends Component{
   render(){
     return (
       <div className={style.carouselImgContainer}>
-        <img src={carouselImgs[0]}/>
-        <div className={`${style.homeBtn}`}>
-          <Button onClick={this.goAdminPage}>Enter</Button>
-        </div>
+        <h3>Tiboo</h3>
+        <Button onClick={this.goAdminPage} className={`${style.homeBtn}`}>Enter</Button>
       </div>
       )
     }
