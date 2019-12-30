@@ -1,10 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import {connect} from 'react-redux'
 import style from './style.css'
-import {bindActionCreators} from 'redux'
 import {Input, Select, Button, Modal} from 'antd';
-import {actions} from "../../reducers/adminCalclulate";
 import { getListData, delListData } from './service'
 import { Loading } from '../components/loading/Loading';
 

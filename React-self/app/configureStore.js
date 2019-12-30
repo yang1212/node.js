@@ -1,5 +1,4 @@
-import {createStore,applyMiddleware,compose} from 'redux'
-import rootReducer from './reducers'
+import {applyMiddleware,compose} from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
 const win = window;
@@ -16,16 +15,4 @@ if(process.env.NODE_ENV==='production'){
         applyMiddleware(...middlewares,sagaMiddleware),
         (win && win.devToolsExtension) ? win.devToolsExtension() : (f) => f,
     );
-}
-
-export default function configureStore(initialState={}) {
-    const store = createStore(rootReducer, initialState,storeEnhancers);
-    if (module.hot && process.env.NODE_ENV!=='production') {
-        // Enable Webpack hot module replacement for reducers
-        module.hot.accept( './reducers',() => {
-            const nextRootReducer = require('./reducers/index');
-            store.replaceReducer(nextRootReducer);
-        });
-    }
-    return store;
 }
