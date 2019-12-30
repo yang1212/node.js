@@ -18,6 +18,6 @@
 }
 
 /* 奇数行  */
-.dataPanel div:nth-of-type(odd){ background: #404040; color: #fff} 
+.dataPanel .listRow:nth-of-type(odd){ background: #404040; color: #fff} 
 /* 偶数行  */
-.dataPanel div:nth-of-type(even){ background: #eee }
+.dataPanel .listRow:nth-of-type(even){ background: #eee }

@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux'
 import {Input, Select, Button, Modal} from 'antd';
 import {actions} from "../../reducers/adminCalclulate";
 import { getListData, delListData } from './service'
+import { Loading } from '../components/loading/Loading';
 
 class DataPanelDetail extends Component {
   constructor(props) {
@@ -47,15 +48,16 @@ class DataPanelDetail extends Component {
       <div>
         <h2>数据展示</h2>
         <div className={style.dataPanel}>
-          {
-            list.map((item, index) => {
-              return (
-                <div key={index}  className={style.listRow}> 
-                  {item.name}：{item.price}元, {item.date}
-                  <span className={style.deleteBtn} onClick={this.deleteList.bind(this, (item._id))}>Delete</span>
-                </div>
-              )
-            })
+          {  
+            list.length > 0 ? 
+              list.map((item, index) => {
+                return (
+                  <div key={index}  className={style.listRow}> 
+                    {item.name}：{item.price}元, {item.date}
+                    <span className={style.deleteBtn} onClick={this.deleteList.bind(this, (item._id))}>Delete</span>
+                  </div>
+                )
+              }) : <Loading></Loading>
           }
         </div>
       </div>

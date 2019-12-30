@@ -8,6 +8,10 @@
 .listBlock {
   margin-top: 10px;
 }
+.listBlock p {
+  font-size: 10px;
+  color: red;
+}
 .listSpan {
   font-size: 12px;
   font-weight: bold;
@@ -16,5 +20,5 @@
 .titleInput{
   width: 60%;
   display: block;
-  margin:10px 0;
+  margin:3px 0;
 }
