@@ -1,7 +1,7 @@
 {
   "name": "react_express_blog",
   "version": "1.0.0",
-  "description": "react-express-mongo demo",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,16 +12,8 @@
     "start": "npm run watch-client",
     "start-prod": "npm run build & npm run watch-client-prod & npm run start-dev-api"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Nealyang/React-Express-Blog-Demo.git"
-  },
-  "author": "Nealyang",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Nealyang/React-Express-Blog-Demo/issues"
-  },
-  "homepage": "https://github.com/Nealyang/React-Express-Blog-Demo#readme",
   "dependencies": {
     "antd": "^2.13.1",
     "axios": "^0.16.2",
