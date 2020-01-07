@@ -1,5 +1,5 @@
 module.exports = {
-    host:process.env.HOST || 'localhost',
+    host:process.env.HOST || 'localhost', // 关于process.env这里面有许多问题需要了解
     port:process.env.PORT ||(process.env.NODE_ENV === 'production'?8080:8082),
     apiHost:process.env.APIHOST || 'localhost',
     apiPort:process.env.APIPORT || '3030',
@@ -7,7 +7,7 @@ module.exports = {
     dbPort:"27017",
     app:{
         title:"personal blog",
-        description:'Nealyang\'s personal blog demo',
+        description:'demo',
         head:{
             titleTemplate:'blog',
             meta:[

@@ -1,6 +1,7 @@
 const pathLib = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+//插件打包css代码到对应css中
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');

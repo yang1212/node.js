@@ -28,12 +28,14 @@ app.use(compression());
 //热更新
 if(process.env.NODE_ENV!=='production'){
     const Webpack = require('webpack');
+    // webpack-dev-middleware 是一个封装器(wrapper)，它可以把 webpack 处理过的文件发送到一个 server
     const WebpackDevMiddleware = require('webpack-dev-middleware');
     const WebpackHotMiddleware = require('webpack-hot-middleware');
     const webpackConfig = require('../webpack.dev');
 
     const compiler = Webpack(webpackConfig);
-
+    
+    // 告诉 express 使用 webpack-dev-middleware，以及将 webpack.dev.js 配置文件作为基础配置
     app.use(WebpackDevMiddleware(compiler, {
         publicPath: '/',
         stats: {colors: true},

@@ -1,15 +1,17 @@
 const pathLib = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// 在webpack加载之后打开一个新的浏览器窗口
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+// 打包过程，以百分比显示打包进度
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+// build之前清除上次构建生成工程目录dist，build，根据需求传参，可以为数组或字符串
 const CleanPlugin = require('clean-webpack-plugin');
 const config = require('./config/config');
 
 const ROOT_PATH = pathLib.resolve(__dirname);
 const ENTRY_PATH = pathLib.resolve(ROOT_PATH, 'app');
 const OUTPUT_PATH = pathLib.resolve(ROOT_PATH, 'build');
-console.log(pathLib.resolve(ENTRY_PATH, 'index.js'));
 
 module.exports = {
     entry: {
