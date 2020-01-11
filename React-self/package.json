@@ -36,7 +36,7 @@
     "react-slick": "^0.15.4",
     "remark": "^8.0.0",
     "remark-react": "^4.0.1",
-    "serialize-javascript": "^1.4.0",
+    "serialize-javascript": "^2.1.2",
     "serve-favicon": "^2.4.4"
   },
   "devDependencies": {
