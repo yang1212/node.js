@@ -28,20 +28,28 @@ app.use(compression());
 //热更新
 if(process.env.NODE_ENV!=='production'){
     const Webpack = require('webpack');
-    // webpack-dev-middleware 是一个封装器(wrapper)，它可以把 webpack 处理过的文件发送到一个 server
-    const WebpackDevMiddleware = require('webpack-dev-middleware');
-    const WebpackHotMiddleware = require('webpack-hot-middleware');
-    const webpackConfig = require('../webpack.dev');
+    const webpackConfig = require('../config/webpack.dev');
 
     const compiler = Webpack(webpackConfig);
     
-    // 告诉 express 使用 webpack-dev-middleware，以及将 webpack.dev.js 配置文件作为基础配置
-    app.use(WebpackDevMiddleware(compiler, {
-        publicPath: '/',
-        stats: {colors: true},
-        lazy: false
-    }));
-    app.use(WebpackHotMiddleware(compiler));
+    let devMiddleWare = require('webpack-dev-middleware')(compiler, {
+        publicPath: webpackConfig.output.publicPath,
+        quiet: true,
+        stats: {
+          colors: true,
+          modules: false,
+          children: false,
+          chunks: false,
+          chunkModules: false
+        }
+      })
+      
+    let hotMiddleware = require('webpack-hot-middleware')(compiler, {
+        log: false,
+        heartbeat: 2000
+    })
+    app.use(devMiddleWare)
+    app.use(hotMiddleware)
 }
 
 app.listen(port,(err)=>{ // 监听8082端口

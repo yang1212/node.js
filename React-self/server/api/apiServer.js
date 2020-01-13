@@ -33,7 +33,7 @@ mongoose.connect(`mongodb://${config.dbHost}:${config.dbPort}/blog`, function (e
     }
     console.log('数据库连接成功');
 
-    app.listen(port, function (err) { 
+    app.listen(port, function (err) {  // app.listen的作用
         if (err) {
             console.error('err:', err);
         } else {
