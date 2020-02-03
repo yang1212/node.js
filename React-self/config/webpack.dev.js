@@ -8,9 +8,15 @@ const config = require('../config/config');
 
 module.exports = {
   mode: 'development',
-  entry: ['webpack-hot-middleware/client?noInfo=true&reload=true', "./app/index.js"],
+  entry: [
+    'react-hot-loader/patch',
+    `webpack-hot-middleware/client?path=http://${config.host}:${config.port}/__webpack_hmr`,
+    'babel-polyfill',
+     "./app/index.js"
+  ],
   output: {
     path: path.resolve(__dirname, '../dist'),
+    publicPath: '/',  // 设置后解决了刷新路由出现空白的情况    
     chunkFilename: '[name]-[chunkhash:8].js',
     filename: '[name]-[hash:8].js'
   },
@@ -66,10 +72,7 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      title: 'Demo',
-      template: './index.html'
-    }),
+    new HtmlWebpackPlugin(), // 配置此插件将拥有一个默认模板
     new ProgressBarPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ]

@@ -10,6 +10,7 @@ import style from './style.css'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import DataPanel from "../dataPanel/DataPanel"
 import DataPanelDetail from '../dataPanelDetail/DataPanelDetail'
+import DataPanelChart from '../dataPanelChart/DataPanelChart'
 
 class Admin extends Component {
     constructor(props) {
@@ -29,6 +30,7 @@ class Admin extends Component {
                     <Switch>
                         <Route path={`${url}/calculate`} component={DataPanel}/>
                         <Route path={`${url}/calculateShow`} component={DataPanelDetail}/>
+                        <Route path={`${url}/calculateChart`} component={DataPanelChart}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </div>

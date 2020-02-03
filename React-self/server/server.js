@@ -12,8 +12,19 @@ app.use('/api',(req,res)=>{
     proxy.web(req,res,{target:targetUrl})
 });
 
-// 防止刷新浏览或者直接进入某页面出现404
+// 防止刷新页面出现404
+app.use(connectHistoryApiFallback());
 app.use('/', connectHistoryApiFallback());
+app.use('/',Express.static(path.join(__dirname,"..",'dist')));
+
+// app.use(connectHistoryApiFallback({
+//   // 默认根路径为首页
+//   index: '../app/index.js', 
+//   rewrites: [
+//     { from: /flights\/.*$/, to: '/pages/flights.html' },
+//     { from: /(calculate|calculateShow|calculateChart)/, to: '../app/index.js' },
+//   ]
+// }))
 
 //创建一个代理服务,地址为本地的3030端口
 const targetUrl = `http://${config.apiHost}:${config.apiPort}`;
@@ -52,7 +63,7 @@ if(process.env.NODE_ENV!=='production'){
     app.use(hotMiddleware)
 }
 
-app.listen(port,(err)=>{ // 监听8082端口
+app.listen(port,(err)=>{ 
     if(err){
         console.error(err)
     }else{
