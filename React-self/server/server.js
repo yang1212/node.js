@@ -13,18 +13,7 @@ app.use('/api',(req,res)=>{
 });
 
 // 防止刷新页面出现404
-app.use(connectHistoryApiFallback());
 app.use('/', connectHistoryApiFallback());
-app.use('/',Express.static(path.join(__dirname,"..",'dist')));
-
-// app.use(connectHistoryApiFallback({
-//   // 默认根路径为首页
-//   index: '../app/index.js', 
-//   rewrites: [
-//     { from: /flights\/.*$/, to: '/pages/flights.html' },
-//     { from: /(calculate|calculateShow|calculateChart)/, to: '../app/index.js' },
-//   ]
-// }))
 
 //创建一个代理服务,地址为本地的3030端口
 const targetUrl = `http://${config.apiHost}:${config.apiPort}`;

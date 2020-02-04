@@ -15,12 +15,12 @@ module.exports = {
      "./app/index.js"
   ],
   output: {
-    path: path.resolve(__dirname, '../dist'),
+    path: path.resolve(__dirname, '../dist'), 
     publicPath: '/',  // 设置后解决了刷新路由出现空白的情况    
-    chunkFilename: '[name]-[chunkhash:8].js',
+    chunkFilename: '[name]-[chunkhash:8].js', // 用意
     filename: '[name]-[hash:8].js'
   },
-  devtool: 'inline-source-map',
+  devtool: 'inline-source-map', // 此处用意挖掘不深
   module: {
     rules: [
       {
