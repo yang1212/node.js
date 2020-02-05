@@ -13,28 +13,72 @@ class DataPanelChart extends Component {
     super(props);
     this.state = {
       list: [],
+      priceList: [],
+      tagList: [
+        {
+          type: 'eat',
+          name:'餐饮',
+          value: 0,
+        }, 
+        { 
+          type: 'RendHouse',
+          name:'住房缴费',
+          value: 0,
+        },  
+        {
+          type: 'clothes',
+          name:'服饰美容',
+          value: 0,
+        },
+        {
+          type: 'travel',
+          name:'旅游',
+          value: 0,
+        },
+        {
+          type: 'traffic',
+          name:'交通',
+          value: 0,
+        },
+        {
+          type: 'amusement',
+          name:'娱乐',
+          value: 0,
+        },
+        {
+          type: 'study',
+          name:'学习',
+          value: 0,
+        },
+        {
+          type: 'medical',
+          name:'医疗',
+          value: 0,
+        }
+      ],
     }
   }
-  async getList() { //得到列表数据
-    const res = await getListData()
+  async getList() { // 暂时数据放前端处理
+    const res = await getListData();
     this.setState({
       list: res.data,
-    })  
+    })
+    if (res.code === 0) {
+      this.state.tagList.forEach((item, index) => {
+        res.data.forEach((items, indexs) => {
+          if (items.tag === item.type) {
+            this.state.tagList[index].value += items.price
+          } 
+        })
+      })
+      let myChart = echarts.init(this.refs.barChart) //初始化echarts
+      let options = this.setPieOption(this.state.tagList)
+      //设置options
+      myChart.setOption(options)
+    }
   };
   componentDidMount() {
-    let tag = [
-      {
-        value: 1, name: '餐饮'
-      },
-      {
-        value: 22, name: 'fu'
-      }
-    ]
-    const { data } = this.props //外部传入的data数据
-    let myChart = echarts.init(this.refs.pieReact) //初始化echarts
-    let options = this.setPieOption(tag)
-    //设置options
-    myChart.setOption(options)
+    this.getList()
   }
   //一个基本的echarts图表配置函数
   setPieOption(data) {
@@ -47,7 +91,7 @@ class DataPanelChart extends Component {
         {
           name: '比例',
           type: 'bar',
-          data: [2, 4, 3, 5, 3], //传入外部的data数据
+          data: data, //传入外部的data数据
         }
       ],
       xAxis: {
@@ -62,7 +106,7 @@ class DataPanelChart extends Component {
       <div>
         <h2>数据展示</h2>
         <div className="pie-react">
-          <div ref="pieReact" style={{width: "100%", height: "400px"}}></div>
+          <div ref="barChart" style={{width: "100%", height: "400px"}}></div>
         </div>
       </div>
     )
