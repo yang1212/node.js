@@ -72,7 +72,9 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin(), // 配置此插件将拥有一个默认模板
+    new HtmlWebpackPlugin({
+      template: './index.html',
+    }), // 配置此插件将拥有一个默认模板
     new ProgressBarPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ]

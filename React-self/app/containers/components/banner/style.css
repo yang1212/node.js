@@ -1,17 +1,6 @@
-.carouselImgContainer{
-    width: 100%;
-    height: 50px;
-    position: relative;
-    background: #fff;
+.BannerBox {
+  
 }
-
-.carouselImgContainer h3{
-    line-height: 50px;
-    font-size: 15px;
-    margin-left: 10px;
-}
-.homeBtn {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+img {
+  width: 100%;
 }

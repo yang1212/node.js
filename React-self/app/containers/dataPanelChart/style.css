@@ -1,0 +1,10 @@
+.barBox {
+  position: relative;
+}
+.selectBtn {
+  width: 100px;
+  position: absolute;
+  right: 100px;
+  top: 0;
+  z-index: 2;
+}

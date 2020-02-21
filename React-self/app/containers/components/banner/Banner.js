@@ -3,7 +3,7 @@ import {Button} from 'antd'
 import {withRouter} from "react-router-dom";
 import style from './style.css'
 const carouselImgs = [
-  require('./banner_4.jpg'),
+  require('../../../../static/bannerBg.jpg'),
 ]
 class Banner extends Component{
   constructor(props) {
@@ -14,9 +14,8 @@ class Banner extends Component{
   };
   render(){
     return (
-      <div className={style.carouselImgContainer}>
-        <h3>Tiboo</h3>
-        <Button onClick={this.goAdminPage} className={`${style.homeBtn}`}>Enter</Button>
+      <div className={style.BannerBox}>
+        <img src={carouselImgs[0]}/>
       </div>
       )
     }

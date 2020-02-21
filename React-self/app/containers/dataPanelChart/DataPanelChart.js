@@ -4,8 +4,10 @@ import style from './style.css'
 import {Input, Select, Button, Modal} from 'antd';
 import { getListData } from './service'
 import { Loading } from '../components/loading/Loading';
+const Option = Select.Option;
 const echarts = require('echarts/lib/echarts') //必须
 require('echarts/lib/chart/bar') //图表类型
+require('echarts/lib/chart/line')
 require('echarts/lib/component/title') //标题插件
 
 class DataPanelChart extends Component {
@@ -56,6 +58,8 @@ class DataPanelChart extends Component {
           value: 0,
         }
       ],
+      monthList: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+      month: '一月'
     }
   }
   async getList() { // 暂时数据放前端处理
@@ -63,6 +67,7 @@ class DataPanelChart extends Component {
     this.setState({
       list: res.data,
     })
+    console.log(res.data)
     if (res.code === 0) {
       this.state.tagList.forEach((item, index) => {
         res.data.forEach((items, indexs) => {
@@ -71,16 +76,18 @@ class DataPanelChart extends Component {
           } 
         })
       })
-      let myChart = echarts.init(this.refs.barChart) //初始化echarts
-      let options = this.setPieOption(this.state.tagList)
-      //设置options
-      myChart.setOption(options)
+      let myBarChart = echarts.init(this.refs.barChart) //初始化echarts
+      let BarOptions = this.setPieOption(this.state.tagList)
+      myBarChart.setOption(BarOptions)
     }
   };
   componentDidMount() {
     this.getList()
+    let myLineChart = echarts.init(this.refs.lineChart)
+    let lineOptions = this.setLineOption(this.state.tagList)
+    myLineChart.setOption(lineOptions)
   }
-  //一个基本的echarts图表配置函数
+  //柱状图表配置函数
   setPieOption(data) {
     return {
       title: {
@@ -101,13 +108,42 @@ class DataPanelChart extends Component {
       yAxis: {},
     }
   }  
+  setLineOption() {
+    return {
+      title: {
+        text: '折线图'
+      },
+      tooltip: {
+        trigger: 'axis'
+      },
+      series: [{
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: 'line'
+      }],
+      xAxis: {
+        type: 'category',
+        data: this.state.monthList
+      },
+      yAxis: {}
+    }
+  }
   render() {
     return (
       <div>
-        <h2>数据展示</h2>
-        <div className="pie-react">
+        <div className={style.barBox}> 
+          <Select
+            className={style.selectBtn}
+            placeholder={'请选择'}
+            value={this.state.month}>
+            {
+              this.state.monthList.map((item) => (
+                <Option key={item}>{item}</Option>
+              ))
+            }
+          </Select>
           <div ref="barChart" style={{width: "100%", height: "400px"}}></div>
         </div>
+        <div ref="lineChart" style={{width: "100%", height: "400px"}}></div>
       </div>
     )
   }

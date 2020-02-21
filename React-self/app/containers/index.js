@@ -1,13 +1,11 @@
 import React, {Component, PropTypes} from 'react'
-import PureRenderMixiin from 'react-addons-pure-render-mixin'
 import {
-    BrowserRouter as Router,
-    Route,
-    Switch
+  BrowserRouter as Router,
+  Route,
+  Switch
 } from 'react-router-dom'
-import Banner from "./components/banner/Banner";
+import PureRenderMixiin from 'react-addons-pure-render-mixin'
 import Admin from "./admin/Admin";
-import Front from './front/Front'
 import './reset.css'
 
 class AppIndex extends Component {
@@ -23,7 +21,6 @@ class AppIndex extends Component {
         <div>
           <Switch>
             <Route path='/admin' component={Admin}/>
-            <Route component={Front}/>
           </Switch>
         </div>
       </Router>
@@ -33,3 +30,39 @@ class AppIndex extends Component {
 
 
 export default AppIndex
+
+// import React, {Component, PropTypes} from 'react'
+// import PureRenderMixiin from 'react-addons-pure-render-mixin'
+// import {
+//     BrowserRouter as Router,
+//     Route,
+//     Switch
+// } from 'react-router-dom'
+// import Banner from "./components/banner/Banner";
+// import Admin from "./admin/Admin";
+// import Front from './front/Front'
+// import './reset.css'
+
+// class AppIndex extends Component {
+
+//   constructor(props) {
+//     super(props);
+//     this.shouldComponentUpdate = PureRenderMixiin.shouldComponentUpdate.bind(this);
+//   }
+
+//   render() {
+//     return (
+//       <Router>
+//         <div>
+//           <Switch>
+//             <Route path='/admin' component={Admin}/>
+//             <Route component={Front}/>
+//           </Switch>
+//         </div>
+//       </Router>
+//     )
+//   }
+// }
+
+
+// export default AppIndex
