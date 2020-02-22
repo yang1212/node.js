@@ -1,10 +1,9 @@
 import React, {Component, PropTypes} from 'react'
 // 在react开发中都尽量在组件中加入PureRenderMixin方法去优化性能
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import {Input, Select, Button, Modal} from 'antd';
+import { Input, Select, Button } from 'antd';
 import style from './style.css'
 import { getFlightDetail } from './service'
-import { Loading } from '../components/loading/Loading';
 const Option = Select.Option;
 
 class DataPanel extends Component {
@@ -48,9 +47,9 @@ class DataPanel extends Component {
       ],
       tag: '',
       name: '',
-      price: 0,
-      showLoading: false,
+      price: null,
       errorType: '',
+      loading: false,
     }
   }
   //标题输入框
@@ -73,7 +72,7 @@ class DataPanel extends Component {
     if (this.state.tag) {
       if (this.state.name) {
         if (this.state.price) {
-          this.setState({showLoading: true})
+          this.setState({ loading: true });
           let priceData = {};
           priceData.name = this.state.name;
           priceData.price = this.state.price;
@@ -83,10 +82,10 @@ class DataPanel extends Component {
           let res = await getFlightDetail(priceData)
           if (res.code === 0) {
             this.setState({
-              showLoading: false,
               name: '',
               tag: '',
-              price: 0,
+              price: null,
+              loading: false
             })
           }
         } else {
@@ -101,19 +100,17 @@ class DataPanel extends Component {
   };
 
   render() {
-    const { tagList, tag, name, price, showLoading, errorType } = this.state;
+    const { tagList, tag, name, price, errorType } = this.state;
     return (
       <div className={style.dataRecordBox}>
-        <h2>数据统计</h2>
         <div className={style.dataPanel}>
+
           <div className={style.listBlock}>
             <span className={style.listSpan}>分类</span>
             <Select
               className={style.titleInput}
-              placeholder={'请选择'}
-              value={tag}
-              onChange={this.selectTags.bind(this)}
-            >
+              placeholder={'请选择类型'}
+              onChange={this.selectTags.bind(this)}>
               {
                 tagList.map((item) => (
                   <Option key={item.type}>{item.value}</Option>
@@ -132,11 +129,10 @@ class DataPanel extends Component {
               type='text'
               value={name}
               onChange={this.titleOnChange.bind(this)}/>
-              {
-                errorType === 'input2' ?  <p>请输入物品名称</p> : ''
-              }
+            {
+              errorType === 'input2' ?  <p>请输入物品名称</p> : ''
+            }
           </div>
-          
           <div className={style.listBlock}>
             <span className={style.listSpan}>价格</span>    
             <Input
@@ -145,20 +141,17 @@ class DataPanel extends Component {
               type='text'
               value={price}
               onChange={this.priceOnChange.bind(this)}/>
-              {
-                errorType === 'input3' ?   <p>请输入价格</p> : ''
-              }
+            {
+              errorType === 'input3' ?  <p>请输入物品价格</p> : ''
+            }
           </div>
-        </div>
-        <div className={style.bottomContainer}>
+
           <Button type="primary" 
+            loading={this.state.loading}
             onClick={this.publishArticle.bind(this)}
             className={style.buttonStyle}>发布
           </Button>
         </div>
-        {
-          showLoading ? <Loading></Loading> : ''
-        }
       </div>
     )
   }

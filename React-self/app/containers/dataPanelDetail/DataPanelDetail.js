@@ -42,8 +42,7 @@ class DataPanelDetail extends Component {
   render() {
     const { list } = this.state;
     return (
-      <div>
-        <h2>数据展示</h2>
+      <div className={style.dataRecordBox}>
         <div className={style.dataPanel}>
           {  
             list.length > 0 ? 

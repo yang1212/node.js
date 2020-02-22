@@ -24,17 +24,12 @@ class Admin extends Component {
     return (
       <div>
         <Banner/>
-        <div className={style.contentContainer}>
-          <Switch>
-            <Route path={`${url}/calculate`} component={DataPanel}/>
-            <Route path={`${url}/calculateShow`} component={DataPanelDetail}/>
-            <Route path={`${url}/calculateChart`} component={DataPanelChart}/>
-          </Switch>
-        </div>
-        {
-          console.log(2, this.props)
-        }
         <Footer history={this.props.history}/>
+        <Switch>
+          <Route path={`${url}/calculate`} component={DataPanel}/>
+          <Route path={`${url}/calculateShow`} component={DataPanelDetail}/>
+          <Route path={`${url}/calculateChart`} component={DataPanelChart}/>
+        </Switch>
       </div> 
     )
   }
