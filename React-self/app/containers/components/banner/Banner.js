@@ -1,7 +1,7 @@
 import React,{Component,PropsTypes} from 'react'
 import {Button} from 'antd'
 import {withRouter} from "react-router-dom";
-import style from './style.css'
+import './style.less'
 const carouselImgs = [
   require('../../../../static/bannerBg.jpg'),
 ]
@@ -14,7 +14,7 @@ class Banner extends Component{
   };
   render(){
     return (
-      <div className={style.BannerBox}>
+      <div className="BannerBox">
         <img src={carouselImgs[0]}/>
       </div>
       )

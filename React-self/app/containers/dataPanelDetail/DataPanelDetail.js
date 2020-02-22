@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import style from './style.css'
+import './style.less'
 import {Input, Select, Button, Modal} from 'antd';
 import { getListData, delListData } from './service'
 import { Loading } from '../components/loading/Loading';
@@ -42,15 +42,15 @@ class DataPanelDetail extends Component {
   render() {
     const { list } = this.state;
     return (
-      <div className={style.dataRecordBox}>
-        <div className={style.dataPanel}>
+      <div className="dataRecordBox">
+        <div className="dataPanel">
           {  
             list.length > 0 ? 
               list.map((item, index) => {
                 return (
-                  <div key={index}  className={style.listRow}> 
+                  <div key={index}  className="listRow"> 
                     {item.name}：{item.price}元, {item.date}
-                    <span className={style.deleteBtn} onClick={this.deleteList.bind(this, (item._id))}>Delete</span>
+                    <span className="deleteBtn" onClick={this.deleteList.bind(this, (item._id))}>Delete</span>
                   </div>
                 )
               }) : <Loading></Loading>

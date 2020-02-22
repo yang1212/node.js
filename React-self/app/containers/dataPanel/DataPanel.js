@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 // 在react开发中都尽量在组件中加入PureRenderMixin方法去优化性能
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import { Input, Select, Button } from 'antd';
-import style from './style.css'
+import './style.less'
 import { getFlightDetail } from './service'
 const Option = Select.Option;
 
@@ -102,13 +102,13 @@ class DataPanel extends Component {
   render() {
     const { tagList, tag, name, price, errorType } = this.state;
     return (
-      <div className={style.dataRecordBox}>
-        <div className={style.dataPanel}>
+      <div className="dataRecordBox">
+        <div className="dataPanel">
 
-          <div className={style.listBlock}>
-            <span className={style.listSpan}>分类</span>
+          <div className="listBlock">
+            <span className="listSpan">分类</span>
             <Select
-              className={style.titleInput}
+              className="titleInput"
               placeholder={'请选择类型'}
               onChange={this.selectTags.bind(this)}>
               {
@@ -121,10 +121,10 @@ class DataPanel extends Component {
               errorType === 'input1' ? <p>请选择类型</p> : ''
             }
           </div>
-          <div className={style.listBlock}>
-            <span className={style.listSpan}>名称</span>
+          <div className="listBlock">
+            <span className="listSpan">名称</span>
             <Input
-              className={style.titleInput}
+              className="titleInput"
               placeholder={'请输入物品名称'}
               type='text'
               value={name}
@@ -133,10 +133,10 @@ class DataPanel extends Component {
               errorType === 'input2' ?  <p>请输入物品名称</p> : ''
             }
           </div>
-          <div className={style.listBlock}>
-            <span className={style.listSpan}>价格</span>    
+          <div className="listBlock">
+            <span className="listSpan">价格</span>    
             <Input
-              className={style.titleInput}
+              className="titleInput"
               placeholder={'请输入价格'}
               type='text'
               value={price}
@@ -149,7 +149,7 @@ class DataPanel extends Component {
           <Button type="primary" 
             loading={this.state.loading}
             onClick={this.publishArticle.bind(this)}
-            className={style.buttonStyle}>发布
+            className="buttonStyle">发布
           </Button>
         </div>
       </div>

@@ -4,8 +4,7 @@ import {
     Route,
     Redirect,
 } from 'react-router-dom'
-import AdminMenu from "../../components/adminMenu/AdminMenu";
-import style from './style.css'
+import './style.less'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import DataPanel from "../dataPanel/DataPanel"
 import DataPanelDetail from '../dataPanelDetail/DataPanelDetail'

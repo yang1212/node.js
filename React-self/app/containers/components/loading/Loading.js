@@ -1,8 +1,8 @@
 import React from 'react'
 import { Spin } from 'antd';
-import style from './style.css'
+import './style.css'
 export const Loading=()=>(
-  <div className={style.container}>
+  <div className="container">
     <Spin size="large"/>
   </div>
 );

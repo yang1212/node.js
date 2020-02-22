@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import style from './style.css'
+import './style.less'
 import {Input, Select, Button, Modal} from 'antd';
 import { getListData } from './service'
 import { Loading } from '../components/loading/Loading';
@@ -130,9 +130,9 @@ class DataPanelChart extends Component {
   render() {
     return (
       <div>
-        <div className={style.barBox}> 
+        <div className="barBox"> 
           <Select
-            className={style.selectBtn}
+            className="selectBtn"
             placeholder={'请选择'}
             value={this.state.month}>
             {
