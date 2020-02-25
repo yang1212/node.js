@@ -78,7 +78,7 @@ class DataPanel extends Component {
           priceData.price = this.state.price;
           priceData.tag = this.state.tag;
           let tempDate = new Date();
-          priceData.date = tempDate.getFullYear() + '年' + (tempDate.getMonth() + 1) + '月' + tempDate.getDate() + '日'
+          priceData.date = tempDate.getFullYear() + '年' + ((tempDate.getMonth() + 1) > 9 ? (tempDate.getMonth() + 1) : ('0' + (tempDate.getMonth() + 1))) + '月' + tempDate.getDate() + '日'
           let res = await getFlightDetail(priceData)
           if (res.code === 0) {
             this.setState({

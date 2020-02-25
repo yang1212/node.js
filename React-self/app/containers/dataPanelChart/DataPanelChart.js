@@ -19,7 +19,6 @@ class DataPanelChart extends Component {
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.state = {
       list: [],
-      priceList: [],
       tagList: [
         {
           type: 'eat',
@@ -68,29 +67,41 @@ class DataPanelChart extends Component {
     const res = await getListData();
     this.setState({
       list: res.data,
-    })
+    });
     if (res.code === 0) {
-      res.data.forEach((item, index) => {
-        this.state.tagList.forEach((items, indexs) => {
-          if (item.tag === items.type) {
-            this.state.tagList[indexs].value += item.price;
-          }
-        })
-      })
-      let existList = this.state.tagList.filter((item) => {
-        return item.value > 0
-      })
-      let myBarChart = echarts.init(this.refs.barChart) //初始化echarts
-      let BarOptions = this.setPieOption(existList)
-      myBarChart.setOption(BarOptions)
+      this.setPieOption(this.commonDealData(res.data))
     }
   };
+  commonDealData(dataList) {
+    if(dataList.length === 0) { return }
+    dataList.forEach((item, index) => {
+      this.state.tagList.forEach((items, indexs) => {
+        if (item.tag === items.type) {
+          this.state.tagList[indexs].value += item.price
+        }
+      })
+    })
+    let existList = this.state.tagList.filter((item) => {
+      return item.value > 0
+    })
+    return existList
+  }
   componentDidMount() {
     this.getList()
   }
   //柱状图表配置函数
   setPieOption(data) {
-    return {
+    let myBarChart = echarts.init(this.refs.barChart)
+    let option = {
+      noDataLoadingOption: {
+        text: '暂无数据',
+        effect: 'bubble',
+        effectOption: {
+          effect:{
+            n: 0
+          }
+        }
+      },
       tooltip: {
         trigger: 'item',
         formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -109,7 +120,8 @@ class DataPanelChart extends Component {
           type: 'pie',
           radius: '55%',
           center: ['50%', '50%'],
-          data: data.sort(function (a, b) { return a.value - b.value; }),
+          // data: data.sort(function (a, b) { return a.value - b.value; }),
+          data: data,
           roseType: 'radius',
           label: {
             color: 'rgb(0, 0, 255)'
@@ -135,16 +147,21 @@ class DataPanelChart extends Component {
         }
       ]
     }
+    myBarChart.setOption(option, true)
   }
-  onChange(date, dateString) {
+  onChange(date, dateString) { // this的绑定概念需重新巩固
     // 根据时间重新筛选data数据源
-    console.log(date, dateString);
+    let filterList = this.state.list.filter((item) => {
+      let newList
+      return (item.date.slice(0, 4) + '-' + item.date.slice(5, 7)) === dateString
+    })
+    this.setPieOption(this.commonDealData(filterList))
   }
   render() {
     return (
       <div>
         <div className="barBox"> 
-          <MonthPicker onChange={this.onChange} placeholder="请选择时间" className="selectTime"/>
+          <MonthPicker onChange={this.onChange.bind(this)} placeholder="请选择时间" className="selectTime"/>
           <div ref="barChart" style={{width: "100%", height: "300px"}}></div>
         </div>
       </div>
