@@ -12,55 +12,14 @@ require('echarts/lib/component/title') //标题插件
 require('echarts/lib/component/tooltip')
 require('echarts/lib/component/toolbox')
 require('echarts/lib/chart/pie') // 饼图
+require("echarts/lib/component/legend");
 
 class DataPanelChart extends Component {
   constructor(props) {
     super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.state = {
-      list: [],
-      tagList: [
-        {
-          type: 'eat',
-          name:'餐饮',
-          value: 0,
-        }, 
-        { 
-          type: 'RendHouse',
-          name:'住房缴费',
-          value: 0,
-        },  
-        {
-          type: 'clothes',
-          name:'服饰美容',
-          value: 0,
-        },
-        {
-          type: 'travel',
-          name:'旅游',
-          value: 0,
-        },
-        {
-          type: 'traffic',
-          name:'交通',
-          value: 0,
-        },
-        {
-          type: 'amusement',
-          name:'娱乐',
-          value: 0,
-        },
-        {
-          type: 'study',
-          name:'学习',
-          value: 0,
-        },
-        {
-          type: 'medical',
-          name:'医疗',
-          value: 0,
-        }
-      ],
+      list: []
     }
   }
   async getList() { // 暂时数据放前端处理
@@ -74,17 +33,67 @@ class DataPanelChart extends Component {
   };
   commonDealData(dataList) {
     if(dataList.length === 0) { return }
+    let tagList = [
+      {
+        type: 'eat',
+        name:'餐饮',
+        value: 0,
+      }, 
+      { 
+        type: 'RendHouse',
+        name:'住房缴费',
+        value: 0,
+      },  
+      {
+        type: 'clothes',
+        name:'服饰美容',
+        value: 0,
+      },
+      {
+        type: 'travel',
+        name:'旅游',
+        value: 0,
+      },
+      {
+        type: 'traffic',
+        name:'交通',
+        value: 0,
+      },
+      {
+        type: 'amusement',
+        name:'娱乐',
+        value: 0,
+      },
+      {
+        type: 'study',
+        name:'学习',
+        value: 0,
+      },
+      {
+        type: 'medical',
+        name:'医疗',
+        value: 0,
+      }
+    ];
+    let result, legendData = [];
     dataList.forEach((item, index) => {
-      this.state.tagList.forEach((items, indexs) => {
+      tagList.forEach((items, indexs) => {
         if (item.tag === items.type) {
-          this.state.tagList[indexs].value += item.price
+          tagList[indexs].value += item.price
         }
       })
     })
-    let existList = this.state.tagList.filter((item) => {
+    let existList = tagList.filter((item) => {
       return item.value > 0
     })
-    return existList
+    existList.forEach((item) => {
+      legendData.push(item.name)
+    })
+    result = {
+      legendData: legendData,
+      seriesData: existList
+    }
+    return result
   }
   componentDidMount() {
     this.getList()
@@ -93,56 +102,29 @@ class DataPanelChart extends Component {
   setPieOption(data) {
     let myBarChart = echarts.init(this.refs.barChart)
     let option = {
-      noDataLoadingOption: {
-        text: '暂无数据',
-        effect: 'bubble',
-        effectOption: {
-          effect:{
-            n: 0
-          }
-        }
-      },
       tooltip: {
         trigger: 'item',
         formatter: '{a} <br/>{b} : {c} ({d}%)'
       },
-      visualMap: {
-        show: false,
-        min: 80,
-        max: 600,
-        inRange: {
-          colorLightness: [0, 1]
-        }
+      legend:{
+        orient: 'vertical',
+        left: 0,
+        top: 20,
+        bottom: 40,
+        data: data ? data.legendData : '',
       },
       series: [
         {
-          name: '访问来源',
           type: 'pie',
           radius: '55%',
-          center: ['50%', '50%'],
-          // data: data.sort(function (a, b) { return a.value - b.value; }),
-          data: data,
-          roseType: 'radius',
-          label: {
-            color: 'rgb(0, 0, 255)'
-          },
-          labelLine: {
-            lineStyle: {
-              color: 'rgb(0, 0, 255)'
-            },
-            smooth: 0.2,
-            length: 10,
-            length2: 20
-          },
-          itemStyle: {
-            color: '#c23531',
-            shadowBlur: 200,
-            shadowColor: 'rgba(0, 0, 0, 0.5)'
-          },
-          animationType: 'scale',
-          animationEasing: 'elasticOut',
-          animationDelay: function (idx) {
-            return Math.random() * 200;
+          center: ['55%', '55%'],
+          data: data ? data.seriesData : '',
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
           }
         }
       ]
@@ -162,7 +144,7 @@ class DataPanelChart extends Component {
       <div>
         <div className="barBox"> 
           <MonthPicker onChange={this.onChange.bind(this)} placeholder="请选择时间" className="selectTime"/>
-          <div ref="barChart" style={{width: "100%", height: "300px"}}></div>
+          <div ref="barChart" style={{width: "100%", height: "250px"}}></div>
         </div>
       </div>
     )

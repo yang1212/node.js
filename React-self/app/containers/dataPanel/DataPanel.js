@@ -1,10 +1,12 @@
 import React, {Component, PropTypes} from 'react'
 // 在react开发中都尽量在组件中加入PureRenderMixin方法去优化性能
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import { Input, Select, Button } from 'antd';
+import { Input, Select, Button, DatePicker, Form } from 'antd';
+import moment from 'moment'
 import './style.less'
 import { getFlightDetail } from './service'
 const Option = Select.Option;
+const FormItem = Form.Item;
 
 class DataPanel extends Component {
   constructor(props) {
@@ -45,116 +47,124 @@ class DataPanel extends Component {
           value:'医疗'
         }
       ],
-      tag: '',
-      name: '',
-      price: null,
-      errorType: '',
       loading: false,
     }
   }
-  //标题输入框
-  titleOnChange(e) {
-    this.setState({name: e.target.value,})  
-    if (e.target.value) { this.setState({errorType: ''}) }
-  };
-  // 价格输入框
-  priceOnChange(e) {
-    this.setState({price: e.target.value,})  
-    if (e.target.value) { this.setState({errorType: ''}) }
-  };
-  //选择标签
-  selectTags(e) { 
-    this.setState({tag: e,})  
-    if (e) { this.setState({errorType: ''}) }
-  };
   //发表
-  async publishArticle() {
-    if (this.state.tag) {
-      if (this.state.name) {
-        if (this.state.price) {
-          this.setState({ loading: true });
-          let priceData = {};
-          priceData.name = this.state.name;
-          priceData.price = this.state.price;
-          priceData.tag = this.state.tag;
-          let tempDate = new Date();
-          priceData.date = tempDate.getFullYear() + '年' + ((tempDate.getMonth() + 1) > 9 ? (tempDate.getMonth() + 1) : ('0' + (tempDate.getMonth() + 1))) + '月' + tempDate.getDate() + '日'
-          let res = await getFlightDetail(priceData)
-          if (res.code === 0) {
-            this.setState({
-              name: '',
-              tag: '',
-              price: null,
-              loading: false
-            })
-          }
-        } else {
-          this.setState({errorType: 'input3'})
-        }
-      } else {
-        this.setState({errorType: 'input2'})
-      }
-    } else {
-      this.setState({errorType: 'input1'})
-    }
+  async publishArticle(data) {
+    this.setState({ loading: true });
+    let res = await getFlightDetail(data)
+    if (res.code === 0) { this.setState({ loading: false}) }
   };
-
+  handleSubmit(e){
+    e.preventDefault(); // 阻止页面刷新
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        values.date = moment(values.userDate._d).format('YYYY-MM-DD');
+        this.publishArticle(values)
+      }
+    });
+  }
   render() {
-    const { tagList, tag, name, price, errorType } = this.state;
+    const { tagList } = this.state;
+    const { getFieldDecorator } = this.props.form;
     return (
       <div className="dataRecordBox">
-        <div className="dataPanel">
-
-          <div className="listBlock">
-            <span className="listSpan">分类</span>
-            <Select
-              className="titleInput"
-              placeholder={'请选择类型'}
-              onChange={this.selectTags.bind(this)}>
-              {
-                tagList.map((item) => (
-                  <Option key={item.type}>{item.value}</Option>
-                ))
-              }
-            </Select>
+        <Form className="dataPanel">
+          <Form.Item
+            className="listBlock"
+            label="分类"
+            name="tag"
+            rules={[{ required: true, message: 'Please input your username!' }]}>
             {
-              errorType === 'input1' ? <p>请选择类型</p> : ''
+              getFieldDecorator("tag", {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please input your username!'
+                  }
+                ]
+              })(
+                <Select
+                  className="titleInput"
+                  placeholder={'请选择类型'}>
+                  {
+                    tagList.map((item) => (
+                      <Option key={item.type}>{item.value}</Option>
+                    ))
+                  }
+                </Select>
+              )
             }
-          </div>
-          <div className="listBlock">
-            <span className="listSpan">名称</span>
-            <Input
-              className="titleInput"
-              placeholder={'请输入物品名称'}
-              type='text'
-              value={name}
-              onChange={this.titleOnChange.bind(this)}/>
+          </Form.Item>
+          <Form.Item
+            className="listBlock"
+            label="名称"
+            name="name"
+            rules={[{ required: true, message: 'Please input your username!' }]}>
             {
-              errorType === 'input2' ?  <p>请输入物品名称</p> : ''
+              getFieldDecorator("name", {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please input your username!'
+                  }
+                ]
+              })(
+                <Input className="titleInput"/>
+              )
             }
-          </div>
-          <div className="listBlock">
-            <span className="listSpan">价格</span>    
-            <Input
-              className="titleInput"
-              placeholder={'请输入价格'}
-              type='text'
-              value={price}
-              onChange={this.priceOnChange.bind(this)}/>
+          </Form.Item>
+          <Form.Item
+            className="listBlock"
+            label="价格"
+            name="price"
+            rules={[{ required: true, message: 'Please input your username!' }]}>
             {
-              errorType === 'input3' ?  <p>请输入物品价格</p> : ''
+              getFieldDecorator("price", {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please input your username!'
+                  }
+                ]
+              })(
+                <Input className="titleInput"/>
+              )
             }
-          </div>
-
-          <Button type="primary" 
-            loading={this.state.loading}
-            onClick={this.publishArticle.bind(this)}
-            className="buttonStyle">发布
-          </Button>
-        </div>
+          </Form.Item>
+          <Form.Item
+            label="日期"
+            name="date"
+            rules={[{ required: true, message: 'Please input your username!' }]}>
+            {
+              getFieldDecorator("date", {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please input your username!'
+                  }
+                ]
+              })(
+                <DatePicker 
+                  className="titleInput" 
+                  format="YYYY-MM-DD"
+                  mode="date" 
+                  placeholder="请选择时间"/>
+              )
+            }
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" 
+              loading={this.state.loading}
+              onClick={this.handleSubmit.bind(this)}
+              className="buttonStyle">发布
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
     )
   }
 }
 
-export default DataPanel
+export default Form.create()(DataPanel)
