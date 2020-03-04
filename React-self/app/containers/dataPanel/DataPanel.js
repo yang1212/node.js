@@ -54,13 +54,16 @@ class DataPanel extends Component {
   async publishArticle(data) {
     this.setState({ loading: true });
     let res = await getFlightDetail(data)
-    if (res.code === 0) { this.setState({ loading: false}) }
+    if (res.code === 0) { 
+      this.setState({ loading: false}) 
+      this.props.form.resetFields();
+    }
   };
   handleSubmit(e){
     e.preventDefault(); // 阻止页面刷新
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        values.date = moment(values.userDate._d).format('YYYY-MM-DD');
+        values.date = moment(values.date).format('YYYY-MM-DD');
         this.publishArticle(values)
       }
     });
@@ -74,14 +77,13 @@ class DataPanel extends Component {
           <Form.Item
             className="listBlock"
             label="分类"
-            name="tag"
-            rules={[{ required: true, message: 'Please input your username!' }]}>
+            name="tag">
             {
               getFieldDecorator("tag", {
                 rules: [
                   {
                     required: true,
-                    message: 'Please input your username!'
+                    message: '请选择对应的类型!'
                   }
                 ]
               })(
@@ -100,49 +102,46 @@ class DataPanel extends Component {
           <Form.Item
             className="listBlock"
             label="名称"
-            name="name"
-            rules={[{ required: true, message: 'Please input your username!' }]}>
+            name="name">
             {
               getFieldDecorator("name", {
                 rules: [
                   {
                     required: true,
-                    message: 'Please input your username!'
+                    message: '请填写名称!'
                   }
                 ]
               })(
-                <Input className="titleInput"/>
+                <Input className="titleInput" placeholder={'请填写名称'}/>
               )
             }
           </Form.Item>
           <Form.Item
             className="listBlock"
             label="价格"
-            name="price"
-            rules={[{ required: true, message: 'Please input your username!' }]}>
+            name="price">
             {
               getFieldDecorator("price", {
                 rules: [
                   {
                     required: true,
-                    message: 'Please input your username!'
+                    message: '请填写价格!'
                   }
                 ]
               })(
-                <Input className="titleInput"/>
+                <Input className="titleInput" placeholder={'请填写价格'}/>
               )
             }
           </Form.Item>
           <Form.Item
             label="日期"
-            name="date"
-            rules={[{ required: true, message: 'Please input your username!' }]}>
+            name="date">
             {
               getFieldDecorator("date", {
                 rules: [
                   {
                     required: true,
-                    message: 'Please input your username!'
+                    message: '请选择日期!'
                   }
                 ]
               })(
