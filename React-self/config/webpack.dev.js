@@ -25,7 +25,7 @@ module.exports = {
     rules: [
       {
         test: /\.js?$/,
-        exclude: /node_modules/, // 不是所有规则都可添加exclude,如css添加就会报错
+        exclude: /node_modules/, 
         use: ['babel-loader']
       },
       {
