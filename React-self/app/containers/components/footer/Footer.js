@@ -4,9 +4,9 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import './style.less'
 
 const menus = [
-  {url: 'admin/calculate', name: '录入', iconType: 'edit'},
-  {url: 'admin/calculateShow', name: '详细', iconType: 'save'},
-  {url: 'admin/calculateChart', name: '图表', iconType: 'save'}
+  {url: 'calculate', name: '录入', iconType: 'edit'},
+  {url: 'calculateShow', name: '详细', iconType: 'save'},
+  {url: 'calculateChart', name: '图表', iconType: 'save'}
 ];
 
 class Footer extends Component{

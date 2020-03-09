@@ -25,9 +25,9 @@ class Admin extends Component {
         <Banner/>
         <Footer history={this.props.history}/>
         <Switch>
-          <Route path={`${url}/calculate`} component={DataPanel}/>
-          <Route path={`${url}/calculateShow`} component={DataPanelDetail}/>
-          <Route path={`${url}/calculateChart`} component={DataPanelChart}/>
+          <Route path='/calculate' component={DataPanel}/>
+          <Route path='/calculateShow' component={DataPanelDetail}/>
+          <Route path='/calculateChart' component={DataPanelChart}/>
         </Switch>
       </div> 
     )

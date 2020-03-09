@@ -19,7 +19,7 @@ class AppIndex extends Component {
       <Router>
         <div>
           <Switch>
-            <Route path='/admin' component={Admin}/>
+            <Route path='/' component={Admin}/>
           </Switch>
         </div>
       </Router>

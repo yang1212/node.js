@@ -65,6 +65,7 @@ module.exports = {
       template: './index.html',
     }), // 配置此插件将拥有一个默认模板
     new ProgressBarPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new OpenBrowserPlugin({ url: 'http://localhost:9000/calculate' })
   ]
 };
