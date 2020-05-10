@@ -4,7 +4,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import { Input, Select, Button, DatePicker, Form } from 'antd';
 import moment from 'moment'
 import './style.less'
-import { getFlightDetail } from './service'
+import { getFlightDetail, getEnumType } from './service'
 const Option = Select.Option;
 const FormItem = Form.Item;
 
@@ -13,52 +13,29 @@ class DataPanel extends Component {
     super(props); 
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.state = {
-      tagList: [
-        {
-          type: 'eat',
-          value:'餐饮'
-        }, 
-        { 
-          type: 'RendHouse',
-          value:'住房缴费'
-        },  
-        {
-          type: 'clothes',
-          value:'服饰美容'
-        },
-        {
-          type: 'travel',
-          value:'旅游'
-        },
-        {
-          type: 'traffic',
-          value:'交通'
-        },
-        {
-          type: 'amusement',
-          value:'娱乐'
-        },
-        {
-          type: 'study',
-          value:'学习'
-        },
-        {
-          type: 'medical',
-          value:'医疗'
-        }
-      ],
+      tagList: [],
       loading: false,
     }
+  }
+  componentDidMount() {
+    this.getEnumTypeData(); // 类型枚举
   }
   //发表
   async publishArticle(data) {
     this.setState({ loading: true });
     let res = await getFlightDetail(data)
-    if (res.code === 0) { 
+    if (res.resultCode === 200) { 
       this.setState({ loading: false}) 
       this.props.form.resetFields();
     }
   };
+  async getEnumTypeData() {
+    let res = await getEnumType()
+    if (res.resultCode === 200) {
+      this.setState({tagList: res.data})
+    }
+    console.log(res)
+  }
   handleSubmit(e){
     e.preventDefault(); // 阻止页面刷新
     this.props.form.validateFields((err, values) => {

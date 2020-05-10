@@ -9,3 +9,15 @@ export function getFlightDetail(params) {
         })
     })
 }
+
+
+export function getEnumType(params) {
+    let url = '/admin/calculate/getEnumType'
+    return new Promise((resolve, reject) => {
+        get(url).then((res) => {
+          resolve(res)
+        }).catch((data) => {
+            reject(data)
+        })
+    })
+}
