@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import './style.less'
 import {Input, Select, Button, DatePicker, } from 'antd';
-import { getListData } from './service'
+import { getListData, getTimeDataList } from './service'
 import { Loading } from '../components/loading/Loading';
 const { MonthPicker } = DatePicker;
 const Option = Select.Option;
@@ -31,6 +31,10 @@ class DataPanelChart extends Component {
       this.setPieOption(this.commonDealData(res.data))
     }
   };
+  async getDataList() {
+    const res = await getTimeDataList('2020-05-16')
+    console.log(res)
+  }
   commonDealData(dataList) {
     if(dataList.length === 0) { return }
     let tagList = [
@@ -97,6 +101,7 @@ class DataPanelChart extends Component {
   }
   componentDidMount() {
     this.getList()
+    this.getDataList()
   }
   //柱状图表配置函数
   setPieOption(data) {

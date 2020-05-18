@@ -47,6 +47,16 @@ router.get('/getLifeData', function (req, res) {
     })
 })
 
+router.post('/getTimeDataList', function(req, res) {
+    List.find().then(data => {
+        console.log(3)
+        console.log(data)
+        responseClient(res, 200, 0, '请求成功', data);
+    }).catch(err => {
+        responseClient(res)
+    }) 
+})
+
 router.get('/getEnumType', function(req, res) {
     SortEnumType.find().then(data => {
         responseClient(res, 200, 200, '请求成功', data);

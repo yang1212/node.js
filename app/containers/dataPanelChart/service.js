@@ -9,3 +9,15 @@ export function getListData() {
         })
     })
 }
+
+export function getTimeDataList(params) {
+    console.log(params)
+    let url = '/admin/calculate/getTimeDataList'
+    return new Promise((resolve, reject) => {
+        post(url, params).then((res) => {
+          resolve(res)
+        }).catch((data) => {
+          reject(data)
+        })
+    })
+}
