@@ -50,7 +50,7 @@ router.get('/getLifeData', function (req, res) {
 router.post('/getTimeDataList', function(req, res) {
     List.find().then(data => {
         console.log(3)
-        console.log(data)
+        console.log(data) // 时间参数， res方法过滤返回
         responseClient(res, 200, 0, '请求成功', data);
     }).catch(err => {
         responseClient(res)
