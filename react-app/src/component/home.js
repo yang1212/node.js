@@ -1,43 +1,35 @@
-import * as React from 'react'
 import { Row, Col } from 'antd'
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route, useRouteMatch, Link } from 'react-router-dom';
 import './home.less'
+import Content from './content'
 
-export default class Home extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      leftContent: [
-        { name: 'react router', key: 'list1'},
-        { name: 'reducer', key: 'list2'}
-      ]
-    }
-  }
-  render() {
-    return (
-      <div>
-        <Row>
-          <BrowserRouter>
-            <Col span={3} className="left-box">
-              {/* 动态路由 */}
-              {
-                this.state.leftContent.map((item, index) => {
-                  return(
-                    <Route path="/home"  exact render={() => <Home/>}></Route>
-                    // <p key={index}>{item.name}</p>
-                  )
-                })
-              }
-            </Col>
-          </BrowserRouter>
-          <Col span={13} className="right-box">
-            <p>Ant按需配置</p>
-            <p>配置在package.json文件中，不支持单独配置babelRc文件</p>  
-            <p>路由跳转</p>
-            <p>用withRouter解决使用this.props.history跳转报错</p>
-          </Col>
-        </Row>
-      </div>
-    )
-  }
+export default function Home() {
+  const leftContent = [
+    { name: 'react router', key: 'list1'},
+    { name: 'reducer', key: 'list2'}
+  ]
+  const match = useRouteMatch()
+  return (
+    <div>
+      <Row>
+        <Col span={3} className="left-box">
+            {
+              leftContent.map((item, index) => {
+                return(
+                  <Link to={`${match.url}/${item.key}`} key={index}>{item.name}</Link>
+                )
+              })
+            }
+        </Col>
+        <Col span={13} className="right-box">
+          <Route path={`${match.path}/:topicId`}>
+            <Content />
+          </Route>
+          <Route path={match.path} exact>
+            <h3>Default Home</h3>
+          </Route>
+        </Col>
+      </Row>
+    </div>
+  );
 }

@@ -19,6 +19,7 @@ class HeaderNav extends React.Component {
     this.props.history.push(`/${e.key}`)
   };
   render() {
+    // withRouter貌似解决this.props
     return (
       <div className="header">
         <div className="logo"><GithubFilled style={{ fontSize: '24px', color: '#08c' }} /></div>
