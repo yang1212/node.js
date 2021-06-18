@@ -3,6 +3,7 @@ import HeaderNav from './component/headerNav'
 import Index from './component/index'
 import Home from './component/home'
 import About from './component/about'
+import Test from './component/test'
 
 export default function App() {
   return (
@@ -12,6 +13,9 @@ export default function App() {
         <Route path="/"  exact render={() => <Index/>}></Route>
         <Route path="/home"   render={() => <Home/>}></Route>
         <Route path="/about"  render={() => <About/>}></Route>
+        <Route path="/test">
+          <Test/>
+        </Route>
       </div>
     </BrowserRouter>
   )

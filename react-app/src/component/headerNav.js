@@ -16,17 +16,17 @@ class HeaderNav extends React.Component {
     this.setState({
       current: e.key,
     });
+    console.log('nav', this.props)
     this.props.history.push(`/${e.key}`)
   };
   render() {
-    // withRouter貌似解决this.props
     return (
       <div className="header">
         <div className="logo"><GithubFilled style={{ fontSize: '24px', color: '#08c' }} /></div>
         <Menu mode="horizontal" onClick={this.handleClick} selectedKeys={[this.state.current]}>
           <Menu.Item key="home">文档</Menu.Item>
           <Menu.Item key="about">配置</Menu.Item>
-          <Menu.Item key="About1">API</Menu.Item>
+          <Menu.Item key="test">API</Menu.Item>
           <Menu.Item key="About2">案例</Menu.Item>
         </Menu>
       </div>

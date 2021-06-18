@@ -15,4 +15,9 @@ create-react-app是基于scss，需改造webpack配置文件，并下载对应lo
 
 ###  `好用的规则`
 
-不编写 class 的情况，基于函数的形式编写组件，可参考[此文](https://zh-hans.reactjs.org/docs/hooks-intro.html), 这样写的好处
+不编写 class 的情况，基于函数的形式编写组件，可参考[此文](https://zh-hans.reactjs.org/docs/hooks-intro.html)
+
+attention: 基于函数形式时，此时this值即为undefined, 类似方法的调用，将不再基于this指向
+
+
+### `ReactDOM.render、class extends、function`
