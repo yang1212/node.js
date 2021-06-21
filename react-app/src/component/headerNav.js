@@ -16,7 +16,6 @@ class HeaderNav extends React.Component {
     this.setState({
       current: e.key,
     });
-    console.log('nav', this.props)
     this.props.history.push(`/${e.key}`)
   };
   render() {
