@@ -1,11 +1,22 @@
 .header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
   .logo {
-    position: absolute;
-    top: 12px;
-    left: 50px;
+    position: relative;
+    top: 9px;
+    left: 20px;
   }
   .ant-menu {
-    justify-content: flex-end;
-    padding-right: 50px;
+    margin-right: 50px;
+    border: none;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .header {
+    .ant-menu {
+      width: 50px;
+    }
   }
 }

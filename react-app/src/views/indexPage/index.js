@@ -3,7 +3,7 @@ import React from 'react';
 class Index extends React.Component {
   render() {
     return (
-      <div className="header">
+      <div className="index-container">
         233
       </div>
     )
